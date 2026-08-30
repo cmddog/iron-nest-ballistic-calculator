@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "VT323";
+    src: url("./assets/fonts/VT323-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --crt-red: rgb(218, 49, 49);
+    --crt-green: rgb(112, 159, 115);
+    --crt-blue: rgb(40, 129, 206);
+    font-family: "VT323", sans-serif;
+    font-size: 2em;
+}
+
+.crt {
+    color: rgb(90, 252, 114);
+
+    background-color: rgb(35, 47, 35);
+    text-shadow: 0 0 0.2em currentColor, 2px 2px rgba(255, 0, 255, 0.5),
+    -2px -2px rgba(0, 255, 255, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+
+    &:before,
+    &:after {
+        content: "";
+        transform: translateZ(0);
+        pointer-events: none;
+        /* opacity: 0.5; */
+        mix-blend-mode: overlay;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 1;
+    }
+
+    &:before {
+        background: repeating-linear-gradient(
+                var(--crt-red) 0px,
+                var(--crt-green) 2px,
+                var(--crt-blue) 4px
+        );
+    }
+
+    &:after {
+        background: repeating-linear-gradient(
+                90deg,
+                var(--crt-red) 1px,
+                var(--crt-green) 2px,
+                var(--crt-blue) 3px
+        );
+    }
+}
+
+.wrapper {
+    margin: 5rem;
+}
