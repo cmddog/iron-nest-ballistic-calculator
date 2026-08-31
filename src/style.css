@@ -9,16 +9,40 @@
     --crt-red: rgb(218, 49, 49);
     --crt-green: rgb(112, 159, 115);
     --crt-blue: rgb(40, 129, 206);
+    --primary: #5AFC72FF;
+    --secondary: #46bf58;
     font-family: "VT323", sans-serif;
-    font-size: 2em;
+}
+
+h1 {
+    font-size: 4rem;
+    margin: 0;
+}
+
+p, span {
+    font-size: 2rem;
+    margin: 0;
+}
+
+h1:has(+ .subtitle), h2:has(+ .subtitle), h3:has(+ .subtitle), h4:has(+ .subtitle), h5:has(+ .subtitle), h6:has(+ .subtitle) {
+    margin-bottom: 0;
+}
+
+.subtitle {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
 }
 
 .crt {
-    color: rgb(90, 252, 114);
+    color: var(--primary);
+    overflow: hidden;
 
     background-color: rgb(35, 47, 35);
-    text-shadow: 0 0 0.2em currentColor, 2px 2px rgba(255, 0, 255, 0.5),
-    -2px -2px rgba(0, 255, 255, 0.4);
+    text-shadow: 0 0 0.2em currentColor,
+    1px 1px rgba(255, 0, 255, 0.5),
+    -1px -1px rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
     position: absolute;
     top: 0;
     left: 0;
@@ -58,6 +82,106 @@
     }
 }
 
-.wrapper {
-    margin: 5rem;
+.scroll-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden auto;
+}
+
+.inner-wrapper {
+    width: 75rem;
+    margin-top: 2rem;
+}
+
+.bounding-box-outer {
+    display: flex;
+    flex-direction: column;
+}
+
+.bounding-box {
+    border: solid 1px var(--primary);
+    padding: 1rem;
+    box-shadow: 0 0 0.2em currentColor,
+    1px 1px rgba(255, 0, 255, 0.5),
+    -1px -1px rgba(0, 255, 255, 0.4);;
+}
+
+.bounding-box-outer > p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, auto);
+    gap: 1rem;
+    width: 100%;
+}
+
+.bearing {
+    grid-column-start: 2;
+    grid-row-start: 1;
+}
+
+.charges {
+    grid-column: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.shell-type {
+    grid-row-start: 3;
+}
+
+.label {
+    grid-row-start: 3;
+}
+
+.icon {
+    grid-column: span 2 / span 2;
+    grid-row-start: 4;
+}
+
+.result {
+    grid-row: span 4 / span 4;
+    grid-column-start: 3;
+    grid-row-start: 1;
+}
+
+input {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 2rem;
+    font-family: "VT323", monospace;
+}
+
+label > span {
+    cursor: text;
+}
+
+label:active {
+    outline: none;
+}
+
+.result > .bounding-box {
+    height: 100%;
+}
+
+.calculator > label {
+    font-size: 1.5rem;
+}
+
+.input-with-unit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

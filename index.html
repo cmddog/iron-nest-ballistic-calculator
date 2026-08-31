@@ -1,20 +1,58 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>iron-nest-ballistics-calculator</title>
-  </head>
-  <body>
-  <script type="module" src="/src/main.ts"></script>
-  <main class="crt">
-    <div class="wrapper">
-		<p>abcdefg</p>
-		<p>1234567</p>
-		<p>.......</p>
-		<p>---M---</p>
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Iron Nest Ballistics Calculator</title>
+</head>
+<body>
+<script type="module" src="/src/main.ts"></script>
+<main class="crt">
+    <div class="scroll-wrapper">
+        <div class="inner-wrapper">
+            <div class="bounding-box-outer header">
+                <div class="bounding-box">
+                    <h1>IRON NEST BALLISTICS CALCULATOR</h1>
+                </div>
+                <p class="subtitle">>> v0.1 // Assured compatibility with game version 1.0</p>
+            </div>
+            <form class="calculator">
+                <div class="distance bounding-box-outer">
+                    <label for="distance">
+                        > DISTANCE
+                        <span class="bounding-box input-with-unit">
+                            <input id="distance" name="distance" placeholder="00.00" />
+                            <span>km</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="bearing bounding-box-outer">
+                    <label for="bearing">
+                        > BEARING
+                        <span class="bounding-box input-with-unit">
+                            <input id="bearing" name="distance" placeholder="000.00" />
+                            <span>deg</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="charges bounding-box">charges</div>
+                <div class="shell-type bounding-box-outer">
+                    <p>> SHELL TYPE</p>
+                    <div class="bounding-box">shell type</div>
+                </div>
+                <div class="label bounding-box-outer">
+                    <p>> LABEL</p>
+                    <div class="bounding-box">label</div>
+                </div>
+                <div class="icon bounding-box">icon</div>
+                <div class="result bounding-box-outer">
+                    <p>> CALCULATED ELEVATION (DEG)</p>
+                    <div class="bounding-box">result</div>
+                </div>
+            </form>
+        </div>
     </div>
-  </main>
-  </body>
+</main>
+</body>
 </html>
