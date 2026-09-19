@@ -1,3 +1,5 @@
+@import "./crt.css";
+
 @font-face {
     font-family: "VT323";
     src: url("./assets/fonts/VT323-Regular.woff2") format("woff2");
@@ -11,6 +13,8 @@
     --crt-blue: rgb(40, 129, 206);
     --primary: #5AFC72FF;
     --secondary: #46bf58;
+    --dim: #2f8a3f;
+    --bright: #b6ffc2;
     font-family: "VT323", sans-serif;
 }
 
@@ -32,54 +36,6 @@ h1:has(+ .subtitle), h2:has(+ .subtitle), h3:has(+ .subtitle), h4:has(+ .subtitl
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 1.25rem;
-}
-
-.crt {
-    color: var(--primary);
-    overflow: hidden;
-
-    background-color: rgb(35, 47, 35);
-    text-shadow: 0 0 0.2em currentColor,
-    1px 1px rgba(255, 0, 255, 0.5),
-    -1px -1px rgba(0, 255, 255, 0.4);
-    box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100dvw;
-    height: 100dvh;
-
-    &:before,
-    &:after {
-        content: "";
-        transform: translateZ(0);
-        pointer-events: none;
-        /* opacity: 0.5; */
-        mix-blend-mode: overlay;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        top: 0;
-        z-index: 1;
-    }
-
-    &:before {
-        background: repeating-linear-gradient(
-                var(--crt-red) 0px,
-                var(--crt-green) 2px,
-                var(--crt-blue) 4px
-        );
-    }
-
-    &:after {
-        background: repeating-linear-gradient(
-                90deg,
-                var(--crt-red) 1px,
-                var(--crt-green) 2px,
-                var(--crt-blue) 3px
-        );
-    }
 }
 
 .scroll-wrapper {
@@ -164,6 +120,16 @@ input {
     font-family: "VT323", monospace;
 }
 
+.ghost-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    cursor: default;
+    caret-color: transparent;
+}
+
 label > span {
     cursor: text;
 }
@@ -184,4 +150,30 @@ label:active {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: relative;
+    transition: box-shadow 0.1s ease, border-color 0.1s ease;
+}
+
+/* The formatted number that sits behind the invisible ghost input. */
+.value-display {
+    color: var(--primary);
+    transition: color 0.1s ease;
+}
+
+/* Dim the number when it is still the empty 00.00 / 000.00 placeholder. */
+.value-display.is-empty {
+    color: var(--dim);
+}
+
+/* Brighten the number while the field is focused / being typed into. */
+.value-display.is-focused {
+    color: var(--bright);
+}
+
+/* Brighten the surrounding outline while its field is focused. */
+.input-with-unit:has(.value-display.is-focused) {
+    border-color: var(--bright);
+    box-shadow: 0 0 0.4em var(--bright),
+    1px 1px rgba(255, 0, 255, 0.5),
+    -1px -1px rgba(0, 255, 255, 0.4);
 }
