@@ -12,7 +12,6 @@ const FIELDS: Record<string, FieldConfig> = {
 
 const distanceValue = signal<number>(0);
 const bearingValue = signal<number>(0);
-const selectedCharge = signal<number>(1);
 
 const valueSignals: Record<string, Signal<number>> = {
     distance: distanceValue,
@@ -27,7 +26,6 @@ export const distance = computed(
 export const bearing = computed(
     () => bearingValue.value / Math.pow(10, FIELDS.bearing.decimalPlaces),
 );
-export { selectedCharge };
 
 
 function maxValue(config: FieldConfig): number {
