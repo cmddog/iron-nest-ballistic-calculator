@@ -56,7 +56,7 @@ export function setupShellField(): void {
     input.addEventListener('focus', forceCaretToEnd);
 
     input.addEventListener('keydown', e => {
-        if (e.key.length === 1 && !shellTypesByUse.value.some(shell => shell.label.startsWith(input.value + e.key))) {
+        if (e.key.length === 1 && !shellTypesByUse.value.some(shell => shell.label.startsWith((input.value + e.key).toUpperCase()))) {
             e.preventDefault();
         } else if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
             e.preventDefault();
@@ -75,6 +75,6 @@ export function setupShellField(): void {
 
     prediction.innerHTML = shellTypesByUse.value[0].label;
 
-    input.addEventListener('input', makePrediction)
-    input.addEventListener('focus', makePrediction)
+    input.addEventListener('input', makePrediction);
+    input.addEventListener('focus', makePrediction);
 }
