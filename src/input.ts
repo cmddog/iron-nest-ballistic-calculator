@@ -3,11 +3,12 @@ import {computed, effect, signal, type Signal} from '@preact/signals-core';
 interface FieldConfig {
     totalDigits: number;
     decimalPlaces: number;
+    maxValue?: number;
 }
 
 const FIELDS: Record<string, FieldConfig> = {
     distance: { totalDigits: 4, decimalPlaces: 2 },
-    bearing: { totalDigits: 5, decimalPlaces: 2 },
+    bearing: { totalDigits: 5, decimalPlaces: 2, maxValue: 35999 },
 };
 
 const distanceValue = signal<number>(0);
@@ -28,7 +29,7 @@ export const bearing = computed(
 );
 
 
-function maxValue(config: FieldConfig): number {
+function maxDigits(config: FieldConfig): number {
     return Math.pow(10, config.totalDigits) - 1;
 }
 
@@ -67,7 +68,7 @@ function setupField(field: string) {
                 value.value = 0;
             }
             appendDigit(value, Number(event.key), config);
-        } else if (event.key === 'Backspace' || event.key === 'Delete') {
+        } else if (event.key === 'Backspace') {
             event.preventDefault();
             resetArmed[field] = false;
             if (event.ctrlKey || event.metaKey) {
@@ -75,7 +76,7 @@ function setupField(field: string) {
             } else {
                 removeDigit(value);
             }
-        } else if(event.key === 'r') {
+        } else if(event.key === 'r' || event.key === 'Delete') {
             value.value = 0;
         } else if (event.key === 'Escape') {
             event.preventDefault()
@@ -89,10 +90,11 @@ function setupField(field: string) {
 }
 
 function appendDigit(value: Signal<number>, digit: number, config: FieldConfig) {
-    const next = value.value * 10 + digit;
-    if (next > maxValue(config)) {
+    let next = value.value * 10 + digit;
+    if (next > maxDigits(config)) {
         return;
     }
+    if (config.maxValue && next > config.maxValue) next = config.maxValue;
     value.value = next;
 }
 

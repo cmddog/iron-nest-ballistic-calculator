@@ -13,6 +13,7 @@
     "vite": "^8.2.2"
   },
   "dependencies": {
-    "@preact/signals-core": "^1.14.4"
+    "@preact/signals-core": "^1.14.4",
+    "prettier": "^3.9.8"
   }
 }

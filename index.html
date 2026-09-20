@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Iron Nest Ballistics Calculator</title>
 </head>
@@ -38,6 +38,22 @@
                         </span>
                     </label>
                 </div>
+                <div class="shell-type bounding-box-outer">
+                    <label for="shell-type">
+                        > Shell Type
+                        <span id="shell-type-prediction"></span>
+                        <input class="bounding-box input-with-unit"
+                               id="shell-type" name="bearing" type="text"
+                               maxlength="20"/>
+                    </label>
+                </div>
+                <div class="label bounding-box-outer">
+                    <label for="label">
+                        > Label
+                        <input class="bounding-box input-with-unit" id="label" name="bearing" type="text"
+                               maxlength="20" placeholder="TARGET"/>
+                    </label>
+                </div>
                 <div class="charges-outer">
                     > CHARGES
                     <div class="charges">
@@ -49,15 +65,6 @@
                         <button class="charge-button bounding-box">6</button>
                     </div>
                 </div>
-                <div class="shell-type bounding-box-outer">
-                    <p>> SHELL TYPE</p>
-                    <div class="bounding-box">shell type</div>
-                </div>
-                <div class="label bounding-box-outer">
-                    <p>> LABEL</p>
-                    <div class="bounding-box">label</div>
-                </div>
-                <div class="icon bounding-box">icon</div>
                 <div class="result bounding-box-outer">
                     <p>> CALCULATED ELEVATION (DEG)</p>
                     <div class="bounding-box">result</div>
