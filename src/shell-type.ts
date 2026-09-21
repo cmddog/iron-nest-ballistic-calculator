@@ -40,6 +40,12 @@ const shellTypesByUse = computed(() =>
 
 const input = document.getElementById("shell-type") as HTMLInputElement;
 const prediction = document.getElementById("shell-type-prediction") as HTMLSpanElement;
+let lastInputValue = "";
+
+function inputOnEnter(): void {
+    input.value = lastInputValue;
+    forceCaretToEnd();
+}
 
 function forceCaretToEnd(): void {
     const len = input.value.length;
@@ -47,12 +53,11 @@ function forceCaretToEnd(): void {
 }
 
 function makePrediction(): void {
-    console.log(shellTypesByUse.value.filter(shell => shell.label.startsWith(input.value))[0].label)
     prediction.innerHTML = shellTypesByUse.value.filter(shell => shell.label.startsWith(input.value))[0].label
 }
 
 export function setupShellField(): void {
-    input.addEventListener('click', forceCaretToEnd);
+    input.addEventListener('focus', inputOnEnter);
     input.addEventListener('focus', forceCaretToEnd);
 
     input.addEventListener('keydown', e => {
@@ -77,4 +82,8 @@ export function setupShellField(): void {
 
     input.addEventListener('input', makePrediction);
     input.addEventListener('focus', makePrediction);
+    input.addEventListener('blur', () => {
+        lastInputValue = input.value;
+        input.value = prediction.textContent;
+    });
 }

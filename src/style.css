@@ -121,14 +121,39 @@ label:active {
 }
 
 .bearing {
-    grid-column-start: 2;
-    grid-row-start: 1;
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.shell-type {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.label {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.shell-type label {
+    position: relative;
+    caret-color: transparent;
+}
+
+.shell-type label input {
+    text-transform: uppercase;
+}
+
+#shell-type-prediction {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    color: var(--dim);
 }
 
 .charges-outer {
-    grid-column: span 2 / span 2;
-    grid-column-start: 1;
-    grid-row-start: 3;
+    grid-column: 1 / span 2;
+    grid-row: 3;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -199,30 +224,22 @@ label:active {
     background-color: color-mix(in srgb, var(--crt-red) 75%, var(--dim));
 }
 
-.shell-type, .label {
-    grid-row-start: 2;
-}
-
-.shell-type label {
-    position: relative;
-    caret-color: transparent;
-}
-
-.shell-type label input {
-    text-transform: uppercase;
-}
-
-#shell-type-prediction {
-    position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    color: var(--dim);
-}
-
 .result {
-    grid-row: span 3 / span 3;
-    grid-column-start: 3;
-    grid-row-start: 1;
+    grid-column: 3;
+    grid-row: 1 / span 2;
+}
+
+.calculate-button-wrapper {
+    grid-row: 3;
+    grid-column: 3;
+}
+
+.result > .bounding-box {
+    height: 100%;
+}
+
+.calculator > label {
+    font-size: 1.5rem;
 }
 
 .ghost-input {
@@ -233,14 +250,6 @@ label:active {
     top: 0; left: 0;
     caret-color: transparent;
     cursor: inherit;
-}
-
-.result > .bounding-box {
-    height: 100%;
-}
-
-.calculator > label {
-    font-size: 1.5rem;
 }
 
 .input-with-unit {
