@@ -1,4 +1,5 @@
-import { computed, signal } from "@preact/signals-core";
+import { computed } from "@preact/signals-core";
+import { registerResetCallback } from "./input.ts";
 
 interface Shell {
   label: string;
@@ -10,7 +11,7 @@ function makeShell(label: string, overrides?: Partial<Shell>): Shell {
   return { label, shellSpeed: 0.7, timesUsed: 0, ...overrides };
 }
 
-const SHELL_TYPES = signal<Array<Shell>>([
+const SHELL_TYPES = [
   makeShell("EMPT"),
   makeShell("AP"),
   makeShell("APHE"),
@@ -32,10 +33,10 @@ const SHELL_TYPES = signal<Array<Shell>>([
   makeShell("TEAR"),
   makeShell("THRM"),
   makeShell("WP"),
-]);
+];
 
 const shellTypesByUse = computed(() =>
-  [...SHELL_TYPES.value].sort((a, b) => b.timesUsed - a.timesUsed),
+  [...SHELL_TYPES].sort((a, b) => b.timesUsed - a.timesUsed),
 );
 
 const input = document.getElementById("shell-type") as HTMLInputElement;
@@ -43,9 +44,10 @@ const prediction = document.getElementById(
   "shell-type-prediction",
 ) as HTMLSpanElement;
 let lastInputValue = "";
+let resetArmed = false;
 
 export const selectedShell = computed(() =>
-  SHELL_TYPES.value.find((shell) => shell.label == prediction.textContent),
+  SHELL_TYPES.find((shell) => shell.label == prediction.textContent),
 );
 
 function inputOnEnter(): void {
@@ -69,16 +71,26 @@ export function setupShellField(): void {
   input.addEventListener("focus", forceCaretToEnd);
 
   input.addEventListener("keydown", (e) => {
-    if (
-      e.key.length === 1 &&
-      !shellTypesByUse.value.some((shell) =>
-        shell.label.startsWith((input.value + e.key).toUpperCase()),
-      )
-    ) {
-      e.preventDefault();
+    if (e.key.length === 1) {
+      if (resetArmed) {
+        resetArmed = false;
+        input.classList.remove("is-armed-for-reset");
+        input.value = "";
+        lastInputValue = "";
+      }
+      if (
+        !shellTypesByUse.value.some((shell) =>
+          shell.label.startsWith((input.value + e.key).toUpperCase()),
+        )
+      ) {
+        e.preventDefault();
+      }
     } else if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) {
       e.preventDefault();
       forceCaretToEnd();
+    } else if (e.key === "Backspace") {
+      resetArmed = false;
+      input.classList.remove("is-armed-for-reset");
     }
   });
 
@@ -91,6 +103,7 @@ export function setupShellField(): void {
     }
   });
 
+  input.value = "";
   makePrediction();
 
   input.addEventListener("input", makePrediction);
@@ -98,5 +111,10 @@ export function setupShellField(): void {
   input.addEventListener("blur", () => {
     lastInputValue = input.value;
     input.value = prediction.textContent;
+  });
+
+  registerResetCallback(() => {
+    resetArmed = true;
+    input.classList.add("is-armed-for-reset");
   });
 }

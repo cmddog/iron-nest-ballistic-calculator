@@ -85,6 +85,11 @@ label:has(.value-display.is-focused) {
   color: var(--bright);
 }
 
+label:has(input.is-armed-for-reset:focus),
+label:has(.value-display.is-focused.is-armed-for-reset) {
+  color: var(--primary);
+}
+
 label > span {
   cursor: text;
 }
@@ -337,12 +342,20 @@ button:not(:disabled):focus {
   transition: color 0.1s ease;
 }
 
-.value-display.is-empty {
+.value-display.is-focused {
+  color: var(--bright);
+}
+
+input.is-armed-for-reset, .value-display.is-armed-for-reset, .value-display.is-empty {
   color: var(--dim);
 }
 
-.value-display.is-focused {
-  color: var(--bright);
+input.is-armed-for-reset:focus, .value-display.is-focused.is-armed-for-reset {
+  color: color-mix(in srgb, var(--dim) 50%, var(--primary));
+}
+
+#shell-type.is-armed-for-reset:focus {
+  color: color-mix(in srgb, var(--dim) 50%, var(--primary));
 }
 
 .value-display.is-focused ~ span {

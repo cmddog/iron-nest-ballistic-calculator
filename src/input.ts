@@ -20,6 +20,7 @@ const valueSignals: Record<string, Signal<number>> = {
 };
 
 const resetArmed: Record<string, boolean> = {};
+const resetCallbacks: Array<() => void> = [];
 
 export const distance = computed(
   () => distanceValue.value / Math.pow(10, FIELDS.distance.decimalPlaces),
@@ -51,6 +52,8 @@ function setupField(field: string) {
     return;
   }
 
+  resetArmed[field] = false;
+
   effect(() => {
     display.textContent = formatValue(value.value, config);
     display.classList.toggle("is-empty", value.value === 0);
@@ -65,11 +68,13 @@ function setupField(field: string) {
       if (resetArmed[field]) {
         resetArmed[field] = false;
         value.value = 0;
+        display.classList.remove("is-armed-for-reset");
       }
       appendDigit(value, Number(event.key), config);
     } else if (event.key === "Backspace") {
       event.preventDefault();
       resetArmed[field] = false;
+      display.classList.remove("is-armed-for-reset");
       if (event.ctrlKey || event.metaKey) {
         value.value = 0;
       } else {
@@ -105,10 +110,22 @@ function removeDigit(value: Signal<number>) {
   value.value = Math.floor(value.value / 10);
 }
 
+export function registerResetCallback(callback: () => void) {
+  resetCallbacks.push(callback);
+}
+
 export function armReset() {
   Object.keys(FIELDS).forEach((field) => {
     resetArmed[field] = true;
+    const display = document.querySelector<HTMLElement>(
+      `.value-display[data-field="${field}"]`,
+    );
+    if (display) {
+      display.classList.add("is-armed-for-reset");
+    }
   });
+  
+  resetCallbacks.forEach((callback) => callback());
 }
 
 export function setupInputs() {
