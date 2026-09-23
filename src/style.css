@@ -1,308 +1,419 @@
 @import "./crt.css";
 
 @font-face {
-    font-family: "VT323";
-    src: url("./assets/fonts/VT323-Regular.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "VT323";
+  src: url("./assets/fonts/VT323-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 :root {
-    --crt-red: rgb(218, 49, 49);
-    --crt-green: rgb(112, 159, 115);
-    --crt-blue: rgb(40, 129, 206);
-    --primary: #5AFC72FF;
-    --secondary: #46bf58;
-    --dim: #2f8a3f;
-    --bright: #b6ffc2;
-    font-family: "VT323", sans-serif;
+  --crt-red: rgb(218, 49, 49);
+  --crt-green: rgb(112, 159, 115);
+  --crt-blue: rgb(40, 129, 206);
+  --primary: #5afc72ff;
+  --secondary: #46bf58;
+  --dim: #2f8a3f;
+  --bright: #b6ffc2;
+  font-family: "VT323", sans-serif;
+}
+
+*::selection {
+  background: var(--dim);
+  color: currentColor;
+}
+*::-moz-selection {
+  background: var(--dim);
+  color: currentColor;
 }
 
 h1 {
-    font-size: 4rem;
-    margin: 0;
+  font-size: 4rem;
+  margin: 0;
 }
 
-p, span {
-    font-size: 2rem;
-    margin: 0;
+p,
+span {
+  font-size: 2rem;
+  margin: 0;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-    text-shadow: 0 0 0.2em currentColor,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-shadow:
+    0 0 0.2em currentColor,
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
 }
 
-h1:has(+ .subtitle), h2:has(+ .subtitle), h3:has(+ .subtitle), h4:has(+ .subtitle), h5:has(+ .subtitle), h6:has(+ .subtitle) {
-    margin-bottom: 0;
+h1:has(+ .subtitle),
+h2:has(+ .subtitle),
+h3:has(+ .subtitle),
+h4:has(+ .subtitle),
+h5:has(+ .subtitle),
+h6:has(+ .subtitle) {
+  margin-bottom: 0;
 }
 
 input {
-    background: none;
-    border: none;
-    color: var(--primary);
-    font-size: 2rem;
-    font-family: "VT323", monospace;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 2rem;
+  font-family: "VT323", monospace;
 }
 
 input::placeholder {
-    color: var(--dim);
-    opacity: 1;
+  color: var(--dim);
+  opacity: 1;
 }
 
 span {
-    text-shadow: 0 0 0.2em currentColor,
+  text-shadow:
+    0 0 0.2em currentColor,
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
 }
 
-label:has(input:focus), label:has(.value-display.is-focused) {
-    color: var(--bright);
+label:has(input:focus),
+label:has(.value-display.is-focused) {
+  color: var(--bright);
 }
 
 label > span {
-    cursor: text;
+  cursor: text;
 }
 
 label:active {
-    outline: none;
+  outline: none;
 }
 
 .subtitle {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
 }
 
 .scroll-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden auto;
 }
 
 .inner-wrapper {
-    width: 60rem;
-    margin-top: 4rem;
+  width: 60rem;
+  margin-top: 4rem;
 }
 
 .bounding-box-outer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .bounding-box {
-    border: solid 1px var(--primary);
-    padding: 1rem;
-    box-shadow: 0 0 0.2em currentColor,
+  border: solid 1px var(--primary);
+  padding: 1rem;
+  box-shadow:
+    0 0 0.2em currentColor,
     inset 0 0 0.2em currentColor,
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
 }
 
 .bounding-box-outer > p {
-    font-size: 1rem;
-    margin: 0;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .header {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
-.calculator {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, auto);
-    gap: 1rem;
-    width: 100%;
+#calculator {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, auto);
+  gap: 1rem;
+  width: 100%;
 }
 
 .bearing {
-    grid-column: 2;
-    grid-row: 1;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .shell-type {
-    grid-column: 1;
-    grid-row: 2;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .label {
-    grid-column: 2;
-    grid-row: 2;
+  grid-column: 2;
+  grid-row: 2;
 }
 
 .shell-type label {
-    position: relative;
-    caret-color: transparent;
+  position: relative;
+  caret-color: transparent;
 }
 
 .shell-type label input {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 #shell-type-prediction {
-    position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    color: var(--dim);
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  color: var(--dim);
 }
 
 .charges-outer {
-    grid-column: 1 / span 2;
-    grid-row: 3;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  grid-column: 1 / span 2;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .charges {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button {
+  background: none;
+  color: var(--primary);
+  font-family: VT323, monospace;
+  font-size: 2rem;
+  cursor: pointer;
+
+  text-shadow:
+    0 0 0.2em currentColor,
+    1px 1px rgba(255, 0, 255, 0.5),
+    -1px -1px rgba(0, 255, 255, 0.4);
 }
 
 .charge-button {
-    position: relative;
-    background: none;
-    color: var(--primary);
-    font-family: VT323, monospace;
-    font-size: 2rem;
-    padding: .5rem 1.5rem 1.5rem;
-    cursor: pointer;
-
-    text-shadow: 0 0 0.2em currentColor,
-    1px 1px rgba(255, 0, 255, 0.5),
-    -1px -1px rgba(0, 255, 255, 0.4);
+  position: relative;
+  padding: 0.5rem 1.5rem 1.5rem;
 }
 
-.charge-button, label, div, input {
-    transition: color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
+button,
+.charge-button,
+label,
+div,
+input {
+  transition:
+    color 0.1s ease,
+    border-color 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .charge-button:after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 1rem;
-    height: .25rem;
-    width: .5rem;
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+  height: 0.25rem;
+  width: 0.5rem;
 
-    color: var(--dim);
-    background-color: currentColor;
-    box-shadow: 0 0 0.2em currentColor,
+  color: var(--dim);
+  background-color: currentColor;
+  box-shadow:
+    0 0 0.2em currentColor,
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
 }
 
-.charge-button:not(:disabled):hover, .charge-button:not(:disabled):focus {
-    box-shadow: 0 0 0.4em var(--bright),
+button:not(:disabled):hover,
+button:not(:disabled):focus {
+  box-shadow:
+    0 0 0.4em var(--bright),
     inset 0 0 0.4em var(--bright),
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
-    outline: none;
+  outline: none;
 }
 
-.charge-button.is-selected, .charge-button.is-selected:after {
-    color: var(--bright);
-    border-color: var(--bright);
-    cursor: default;
+.charge-button.is-selected,
+.charge-button.is-selected:after {
+  color: var(--bright);
+  border-color: var(--bright);
+  cursor: default;
 }
 
 .charge-button.is-disabled {
-    color: var(--dim);
-    border-color: var(--dim);
-    cursor: not-allowed;
+  color: var(--dim);
+  border-color: var(--dim);
+  cursor: not-allowed;
 }
 
 .charge-button.is-disabled:after {
-    box-shadow: none;
-    background-color: color-mix(in srgb, var(--crt-red) 75%, var(--dim));
+  box-shadow: none;
+  background-color: color-mix(in srgb, var(--crt-red) 75%, var(--dim));
 }
 
 .result {
-    grid-column: 3;
-    grid-row: 1 / span 2;
+  grid-column: 3;
+  grid-row: 1 / span 3;
 }
 
 .calculate-button-wrapper {
-    grid-row: 3;
-    grid-column: 3;
+  grid-row: 3;
+  grid-column: 3;
 }
 
 .result > .bounding-box {
-    height: 100%;
+  height: 100%;
 }
 
 .calculator > label {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .ghost-input {
-    position: absolute;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0;
-    caret-color: transparent;
-    cursor: inherit;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  caret-color: transparent;
+  cursor: inherit;
 }
 
 .input-with-unit {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    position: relative;
-    transition: box-shadow 0.1s ease, border-color 0.1s ease;
-    cursor: text;
-    width: calc(100% - 2rem);
-    padding: 1rem;
-    font-size: 2rem;
-    text-shadow: 0 0 0.2em currentColor,
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  transition:
+    box-shadow 0.1s ease,
+    border-color 0.1s ease;
+  cursor: text;
+  width: calc(100% - 2rem);
+  padding: 1rem;
+  font-size: 2rem;
+  text-shadow:
+    0 0 0.2em currentColor,
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
-    caret-shape: underscore;
+  caret-shape: underscore;
 }
 
 .input-with-unit:focus {
-    color: var(--bright);
-    border-color: var(--bright);
-    box-shadow: 0 0 0.4em var(--bright),
+  color: var(--bright);
+  border-color: var(--bright);
+  box-shadow:
+    0 0 0.4em var(--bright),
     inset 0 0 0.4em var(--bright),
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
-    outline: none;
+  outline: none;
 }
 
 .input-with-unit:has(.value-display.is-focused) {
-    border-color: var(--bright);
-    box-shadow: 0 0 0.4em var(--bright),
+  border-color: var(--bright);
+  box-shadow:
+    0 0 0.4em var(--bright),
     inset 0 0 0.4em var(--bright),
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
 }
 
 .value-display {
-    color: var(--primary);
-    transition: color 0.1s ease;
+  color: var(--primary);
+  transition: color 0.1s ease;
 }
 
 .value-display.is-empty {
-    color: var(--dim);
+  color: var(--dim);
 }
 
 .value-display.is-focused {
-    color: var(--bright);
+  color: var(--bright);
 }
 
 .value-display.is-focused ~ span {
-    color: var(--bright);
-    text-shadow: 0 0 0.4em var(--bright),
+  color: var(--bright);
+  text-shadow:
+    0 0 0.4em var(--bright),
     inset 0 0 0.4em var(--bright),
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
+}
+
+#result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .elevation-display {
+      margin-top: 0;
+      font-size: 6.6rem;
+    }
+
+    span {
+      font-size: 1.5rem;
+      margin-top: -1rem;
+    }
+  }
+}
+
+.hr {
+  height: 1px;
+  border: none;
+  background-color: var(--primary);
+  box-shadow: 0 0 0.2em var(--primary);
+}
+
+button svg {
+  fill: currentColor;
+  display: block;
+  height: 1.5rem;
+  width: 1.5rem;
+  filter: drop-shadow(0 0 0.2em var(--dim))
+    drop-shadow(1px 1px rgba(255, 0, 255, 0.5))
+    drop-shadow(-1px -1px rgba(0, 255, 255, 0.4));
+}
+
+.calculate-button-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  width: 100%;
+}
+
+#btn-calculate,
+#btn-calculate-and-queue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  height: 4rem;
+  width: 100%;
+}
+
+#btn-calculate {
+  width: 4rem;
 }

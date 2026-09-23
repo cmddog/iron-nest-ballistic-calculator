@@ -1,80 +1,169 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Iron Nest Ballistics Calculator</title>
-</head>
-<body>
-<script type="module" src="/src/main.ts"></script>
-<main class="crt">
-    <div class="scroll-wrapper">
-        <div class="inner-wrapper">
-            <div class="bounding-box-outer header">
-                <div class="bounding-box">
-                    <h1>IRON NEST BALLISTICS CALCULATOR</h1>
-                </div>
-                <p class="subtitle">>> v0.1 // Assured compatibility with game version 1.0</p>
-            </div>
-            <form class="calculator">
-                <div class="distance bounding-box-outer">
-                    <label for="distance">
-                        > DISTANCE
-                        <span class="bounding-box input-with-unit">
-                            <input id="distance" name="distance" type="text" inputmode="numeric" class="ghost-input"/>
-                            <span class="value-display" data-field="distance">00.00</span>
-                            <span>km</span>
-                        </span>
-                    </label>
-                </div>
-                <div class="bearing bounding-box-outer">
-                    <label for="bearing">
-                        > BEARING
-                        <span class="bounding-box input-with-unit">
-                            <input id="bearing" name="bearing" type="text" inputmode="numeric" class="ghost-input"/>
-                            <span class="value-display" data-field="bearing">000.00</span>
-                            <span>deg</span>
-                        </span>
-                    </label>
-                </div>
-                <div class="shell-type bounding-box-outer">
-                    <label for="shell-type">
-                        > Shell Type
-                        <span id="shell-type-prediction"></span>
-                        <input class="bounding-box input-with-unit"
-                               id="shell-type" name="bearing" type="text"
-                               maxlength="20" oninput="this.value = this.value.toUpperCase()" />
-                    </label>
-                </div>
-                <div class="label bounding-box-outer">
-                    <label for="label">
-                        > Label
-                        <input class="bounding-box input-with-unit" id="label" name="bearing" type="text"
-                               maxlength="20" placeholder="TARGET"/>
-                    </label>
-                </div>
-                <div class="charges-outer">
-                    > CHARGES
-                    <div class="charges">
-                        <button class="charge-button bounding-box">1</button>
-                        <button class="charge-button bounding-box">2</button>
-                        <button class="charge-button bounding-box">3</button>
-                        <button class="charge-button bounding-box">4</button>
-                        <button class="charge-button bounding-box">5</button>
-                        <button class="charge-button bounding-box">6</button>
-                    </div>
-                </div>
-                <div class="result bounding-box-outer">
-                    <p>> CALCULATED ELEVATION (DEG)</p>
-                    <div class="bounding-box">result</div>
-                </div>
-                <div class="calculate-button-wrapper">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ballistics calculator for Iron Nest. Enter distance and shell type to instantly calculate required elevation angle and time of flight."
+    />
 
+    <!-- Open Graph (Discord, Slack, iMessage previews etc.) -->
+    <meta property="og:title" content="Iron Nest Ballistics Calculator" />
+    <meta
+      property="og:description"
+      content="Quickly calculate required elevation for artillery shots in Iron Nest."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://iron-nest.shiru.dog" />
+    <!-- og:image is optional but makes Discord embeds look good — 1200×630px recommended -->
+    <meta property="og:image" content="https://yourdomain.com/preview.png" />
+
+    <!-- Tells search engines this is the authoritative URL -->
+    <link rel="canonical" href="https://iron-nest.shiru.dog" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iron Nest Ballistics Calculator</title>
+  </head>
+  <body>
+    <script type="module" src="/src/main.ts"></script>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="icon-calculator" viewBox="0 0 9 9">
+        <path fill="currentColor" d="M1,3H2V4H3V3H4V2H3V1H2V2H1z" />
+        <rect fill="currentColor" x="5" y="2" width="3" height="1" />
+        <rect fill="currentColor" x="1" y="5" width="1" height="1" />
+        <rect fill="currentColor" x="3" y="5" width="1" height="1" />
+        <path fill="currentColor" d="M6,6H5V7H6V8H7V7H8V6H7V5H6z" />
+        <rect fill="currentColor" x="2" y="6" width="1" height="1" />
+        <rect fill="currentColor" x="1" y="7" width="1" height="1" />
+        <rect fill="currentColor" x="3" y="7" width="1" height="1" />
+      </symbol>
+    </svg>
+
+    <main class="crt">
+      <div class="scroll-wrapper">
+        <div class="inner-wrapper">
+          <div class="bounding-box-outer header">
+            <div class="bounding-box">
+              <h1>IRON NEST BALLISTICS CALCULATOR</h1>
+            </div>
+            <p class="subtitle">
+              >> v0.1 // Assured compatibility with game version 1.0
+            </p>
+          </div>
+          <form id="calculator" novalidate>
+            <div class="distance bounding-box-outer">
+              <label for="distance">
+                > DISTANCE
+                <span class="bounding-box input-with-unit">
+                  <input
+                    id="distance"
+                    name="distance"
+                    type="text"
+                    inputmode="numeric"
+                    class="ghost-input"
+                  />
+                  <span class="value-display" data-field="distance">00.00</span>
+                  <span>km</span>
+                </span>
+              </label>
+            </div>
+            <div class="bearing bounding-box-outer">
+              <label for="bearing">
+                > BEARING
+                <span class="bounding-box input-with-unit">
+                  <input
+                    id="bearing"
+                    name="bearing"
+                    type="text"
+                    inputmode="numeric"
+                    class="ghost-input"
+                  />
+                  <span class="value-display" data-field="bearing">000.00</span>
+                  <span>deg</span>
+                </span>
+              </label>
+            </div>
+            <div class="shell-type bounding-box-outer">
+              <label for="shell-type">
+                > Shell Type
+                <span id="shell-type-prediction"></span>
+                <input
+                  class="bounding-box input-with-unit"
+                  id="shell-type"
+                  name="bearing"
+                  type="text"
+                  maxlength="20"
+                  oninput="this.value = this.value.toUpperCase()"
+                />
+              </label>
+            </div>
+            <div class="label bounding-box-outer">
+              <label for="label">
+                > Label
+                <input
+                  class="bounding-box input-with-unit"
+                  id="label"
+                  name="bearing"
+                  type="text"
+                  maxlength="20"
+                  placeholder="TARGET"
+                />
+              </label>
+            </div>
+            <div class="charges-outer">
+              > CHARGES
+              <div class="charges">
+                <button class="charge-button bounding-box">1</button>
+                <button class="charge-button bounding-box">2</button>
+                <button class="charge-button bounding-box">3</button>
+                <button class="charge-button bounding-box">4</button>
+                <button class="charge-button bounding-box">5</button>
+                <button class="charge-button bounding-box">6</button>
+              </div>
+            </div>
+            <div class="result bounding-box-outer">
+              <p>> CALCULATED ELEVATION (DEG)</p>
+              <div id="result-container" class="bounding-box">
+                <div id="result-numbers" class="dim">
+                  <span class="elevation-display"
+                    ><span class="elevation-display" id="elevation-value"
+                      >00.00</span
+                    >°</span
+                  >
+                  <span><span id="tta-value">00.00</span>s to arrive</span>
                 </div>
-            </form>
+
+                <div class="hr" style="width: 90%"></div>
+
+                <div class="calculate-button-wrapper">
+                  <button
+                    type="button"
+                    id="btn-calculate"
+                    class="bounding-box"
+                    aria-label="Calculate"
+                  >
+                    <svg>
+                      <use href="#icon-calculator" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-calculate-and-queue"
+                    class="bounding-box"
+                    aria-label="Calculate and queue"
+                  >
+                    <svg>
+                      <use href="#icon-calculator" />
+                    </svg>
+                    & Queue
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-    </div>
-</main>
-</body>
+      </div>
+    </main>
+  </body>
 </html>

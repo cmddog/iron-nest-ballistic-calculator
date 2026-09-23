@@ -1,42 +1,47 @@
 .crt {
-    color: var(--primary);
-    overflow: hidden;
+  color: var(--primary);
+  overflow: hidden;
 
-    background-color: rgb(35, 47, 35);
-    text-shadow: 0 0 0.2em currentColor,
+  background-color: rgb(35, 47, 35);
+  text-shadow:
+    0 0 0.2em currentColor,
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+
+  &:before,
+  &:after {
+    content: "";
+    transform: translateZ(0);
+    pointer-events: none;
+    /* opacity: 0.5; */
+    mix-blend-mode: overlay;
     position: absolute;
-    top: 0;
+    height: 100%;
+    width: 100%;
     left: 0;
-    width: 100dvw;
-    height: 100dvh;
+    top: 0;
+    z-index: 1;
+  }
 
-    &:before,
-    &:after {
-        content: "";
-        transform: translateZ(0);
-        pointer-events: none;
-        /* opacity: 0.5; */
-        mix-blend-mode: overlay;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        top: 0;
-        z-index: 1;
-    }
-
-    &:before {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='4'%3E%3Crect width='1' height='4' x='0' fill='rgba(255%2C0%2C0%2C0.18)'/%3E%3Crect width='1' height='4' x='1' fill='rgba(0%2C255%2C0%2C0.18)'/%3E%3Crect width='1' height='4' x='2' fill='rgba(0%2C0%2C255%2C0.18)'/%3E%3Crect width='3' height='1' y='0' fill='rgba(255%2C255%2C255%2C0.08)'/%3E%3Crect width='3' height='1' y='3' fill='rgba(0%2C0%2C0%2C0.25)'/%3E%3C/svg%3E");
-        background-size: 6px 8px;
-        image-rendering: pixelated;
-        mix-blend-mode: overlay;
-        box-shadow: 0 0 50rem rgba(0,0,0,0.9) inset;
-    }
+  &:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='4'%3E%3Crect width='1' height='4' x='0' fill='rgba(255%2C0%2C0%2C0.18)'/%3E%3Crect width='1' height='4' x='1' fill='rgba(0%2C255%2C0%2C0.18)'/%3E%3Crect width='1' height='4' x='2' fill='rgba(0%2C0%2C255%2C0.18)'/%3E%3Crect width='3' height='1' y='0' fill='rgba(255%2C255%2C255%2C0.08)'/%3E%3Crect width='3' height='1' y='3' fill='rgba(0%2C0%2C0%2C0.25)'/%3E%3C/svg%3E");
+    background-size: 6px 8px;
+    image-rendering: pixelated;
+    mix-blend-mode: overlay;
+    box-shadow: 0 0 50rem rgba(0, 0, 0, 0.9) inset;
+  }
 }
 
 @keyframes scanline-sweep {
-    from { transform: translateY(-15vh); }
-    to   { transform: translateY(100dvh); }
+  from {
+    transform: translateY(-15vh);
+  }
+  to {
+    transform: translateY(100dvh);
+  }
 }
