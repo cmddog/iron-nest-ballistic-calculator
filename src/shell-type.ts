@@ -91,7 +91,7 @@ export function setupShellField(): void {
     }
   });
 
-  prediction.textContent = shellTypesByUse.value[0].label;
+  makePrediction();
 
   input.addEventListener("input", makePrediction);
   input.addEventListener("focus", makePrediction);
