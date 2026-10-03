@@ -11,10 +11,10 @@
   --crt-red: rgb(218, 49, 49);
   --crt-green: rgb(112, 159, 115);
   --crt-blue: rgb(40, 129, 206);
-  --primary: #5afc72ff;
-  --secondary: #46bf58;
-  --dim: #2f8a3f;
-  --bright: #b6ffc2;
+  --primary: #3dff64;
+  --secondary: #35c24a;
+  --dim: #279a37;
+  --bright: #a6ffb6;
   font-family: "VT323", sans-serif;
 }
 
