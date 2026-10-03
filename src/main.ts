@@ -10,10 +10,3 @@ setupCharges();
 setupShellField();
 setupLabelField();
 setupCalculations();
-
-export function blurAll(): void {
-  const tmp = document.createElement("input");
-  document.body.appendChild(tmp);
-  tmp.focus();
-  document.body.removeChild(tmp);
-}

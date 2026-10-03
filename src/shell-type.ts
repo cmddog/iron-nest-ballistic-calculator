@@ -11,7 +11,20 @@ function makeShell(label: string, overrides?: Partial<Shell>): Shell {
   return { label, shellSpeed: 0.7, timesUsed: 0, ...overrides };
 }
 
-const SHELL_TYPES = [
+export function increaseUseCount() {
+  const shell = selectedShell.value
+  if (!shell) return
+  const shells = SHELL_TYPES.value
+  const toUpdateIndex = shells.findIndex(s => s.label == shell.label);
+  if (toUpdateIndex === -1) return;
+  const toUpdate = shells[toUpdateIndex];
+  const updated = [...shells];
+  updated[toUpdateIndex] = { ...toUpdate, timesUsed: toUpdate.timesUsed + 1 };
+  SHELL_TYPES.value = updated;
+  localStorage.setItem('shells', JSON.stringify(SHELL_TYPES.value))
+}
+
+let SHELL_TYPES = signal<Shell[]>([
   makeShell("EMPT"),
   makeShell("AP"),
   makeShell("APHE"),
@@ -33,10 +46,10 @@ const SHELL_TYPES = [
   makeShell("TEAR"),
   makeShell("THRM"),
   makeShell("WP"),
-];
+]);
 
 const shellTypesByUse = computed(() =>
-  [...SHELL_TYPES].sort((a, b) => b.timesUsed - a.timesUsed),
+  [...SHELL_TYPES.value].sort((a, b) => b.timesUsed - a.timesUsed),
 );
 
 const input = document.getElementById("shell-type") as HTMLInputElement;
@@ -49,7 +62,7 @@ let resetArmed = false;
 const predictionLabel = signal("");
 
 export const selectedShell = computed(() =>
-  SHELL_TYPES.find((shell) => shell.label == predictionLabel.value),
+  SHELL_TYPES.value.find((shell) => shell.label == predictionLabel.value),
 );
 
 function inputOnEnter(): void {
@@ -71,6 +84,9 @@ function makePrediction(): void {
 }
 
 export function setupShellField(): void {
+  const loadedShells = localStorage.getItem('shells');
+  if (loadedShells) SHELL_TYPES.value = JSON.parse(loadedShells) as Shell[];
+
   input.addEventListener("focus", inputOnEnter);
   input.addEventListener("focus", forceCaretToEnd);
 

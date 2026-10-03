@@ -19,6 +19,7 @@ const valueSignals: Record<string, Signal<number>> = {
   bearing: bearingValue,
 };
 
+const distanceInput = document.getElementById("distance")!;
 const resetArmed: Record<string, boolean> = {};
 const resetCallbacks: Array<() => void> = [];
 
@@ -126,6 +127,8 @@ export function armReset() {
   });
 
   resetCallbacks.forEach((callback) => callback());
+
+  distanceInput.focus();
 }
 
 export function setupInputs() {

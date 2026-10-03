@@ -43,7 +43,7 @@ export function toggleDimTarget(id: number) {
 
 const cardView = (t: Target, index: number, total: number) => html`
   <div class="bounding-box-outer">
-    > ${t.label?.trim() || "Target #" + t.id}
+    <p>> ${t.label?.trim() || "Target #" + t.id}</p>
     <article class=${classMap({ "bounding-box": true, "queue-card": true, "is-dimmed": dimmedIds.value.has(t.id) })}>
       <div class="t-content-inner">
         <header>

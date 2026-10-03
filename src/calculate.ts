@@ -1,9 +1,31 @@
 import { CHARGE_COUNT, selectedCharges } from "./charges.ts";
 import { armReset, bearing, distance } from "./input.ts";
-import { selectedShell } from "./shell-type.ts";
-import { blurAll } from "./main.ts";
+import {increaseUseCount, selectedShell} from "./shell-type.ts";
 import { addTarget } from "./target-queue.ts";
 import { label } from "./label.ts";
+
+const resultError = document.querySelector<HTMLElement>(".result-error")!;
+let resultErrorTimer: ReturnType<typeof setTimeout> | null = null;
+
+function showResultError(message: string): void {
+  if (resultErrorTimer !== null) {
+    clearTimeout(resultErrorTimer);
+  }
+  resultError.textContent = message;
+  resultError.classList.add("visible");
+  resultErrorTimer = setTimeout(() => {
+    resultError.classList.remove("visible");
+    resultErrorTimer = null;
+  }, 3000);
+}
+
+function clearResultError(): void {
+  if (resultErrorTimer !== null) {
+    clearTimeout(resultErrorTimer);
+    resultErrorTimer = null;
+  }
+  resultError.classList.remove("visible");
+}
 
 const elevationDisplay = createTween(
   document.getElementById("elevation-value")!,
@@ -66,7 +88,18 @@ function calculateAndQueue() {
 
 function calculate(): [number, number] {
   armReset();
-  blurAll();
+
+  if (distance.value === 0) {
+    showResultError("ENTER DISTANCE");
+    return [-1, -1];
+  }
+
+  if (distance.value > CHARGE_COUNT * 5) {
+    showResultError("INSUFFICIENT CHARGES");
+    return [-1, -1];
+  }
+
+  increaseUseCount();
 
   const elevation = calcElevation(distance.value, selectedCharges.value);
   const tta = calcTimeToArrive(
@@ -75,9 +108,11 @@ function calculate(): [number, number] {
     selectedShell.value?.shellSpeed,
   );
   if (!elevation || !tta) {
+    showResultError("INSUFFICIENT CHARGES");
     return [-1, -1];
   }
 
+  clearResultError();
   elevationDisplay.tweenTo(elevation);
   ttaDisplay.tweenTo(tta);
 
