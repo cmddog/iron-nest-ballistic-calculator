@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@preact/signals-core": "^1.14.4",
+    "lit-html": "^3.3.3",
     "prettier": "^3.9.8"
   }
 }

@@ -1,7 +1,7 @@
-import { computed } from "@preact/signals-core";
+import { computed, signal } from "@preact/signals-core";
 import { registerResetCallback } from "./input.ts";
 
-interface Shell {
+export interface Shell {
   label: string;
   shellSpeed: number;
   timesUsed: number;
@@ -46,8 +46,10 @@ const prediction = document.getElementById(
 let lastInputValue = "";
 let resetArmed = false;
 
+const predictionLabel = signal("");
+
 export const selectedShell = computed(() =>
-  SHELL_TYPES.find((shell) => shell.label == prediction.textContent),
+    SHELL_TYPES.find((shell) => shell.label == predictionLabel.value)
 );
 
 function inputOnEnter(): void {
@@ -61,9 +63,11 @@ function forceCaretToEnd(): void {
 }
 
 function makePrediction(): void {
-  prediction.textContent = shellTypesByUse.value.filter((shell) =>
+  const label = shellTypesByUse.value.filter((shell) =>
     shell.label.startsWith(input.value),
   )[0].label;
+  prediction.textContent = label;
+  predictionLabel.value = label;
 }
 
 export function setupShellField(): void {

@@ -1,7 +1,9 @@
 import { CHARGE_COUNT, selectedCharges } from "./charges.ts";
-import {armReset, distance} from "./input.ts";
+import { armReset, bearing, distance } from "./input.ts";
 import { selectedShell } from "./shell-type.ts";
-import {blurAll} from "./main.ts";
+import { blurAll } from "./main.ts";
+import { addTarget } from "./target-queue.ts";
+import { label } from "./label.ts";
 
 const elevationDisplay = createTween(
   document.getElementById("elevation-value")!,
@@ -23,15 +25,14 @@ export function setupCalculations(): void {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    calculate();
-    // calculateAndQueue();
+    calculateAndQueue();
   });
 
   form.querySelectorAll("input").forEach((input) => {
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        calculate();
+        calculateAndQueue();
       }
     });
   });
@@ -45,11 +46,25 @@ export function setupCalculations(): void {
     .getElementById("btn-calculate-and-queue")!
     .addEventListener("click", (e) => {
       e.preventDefault();
-      calculate();
+      calculateAndQueue();
     });
 }
 
-function calculate() {
+function calculateAndQueue() {
+  const [elevation, tta] = calculate();
+  if (elevation === -1 || tta === -1) return;
+  addTarget({
+    charges: selectedCharges.value,
+    bearing: bearing.value,
+    distance: distance.value,
+    elevation: elevation,
+    tta: tta,
+    shellType: selectedShell.value?.label ?? "EMPT",
+    label: label.value,
+  });
+}
+
+function calculate(): [number, number] {
   armReset();
   blurAll();
 
@@ -60,11 +75,13 @@ function calculate() {
     selectedShell.value?.shellSpeed,
   );
   if (!elevation || !tta) {
-    return;
+    return [-1, -1];
   }
 
   elevationDisplay.tweenTo(elevation);
   ttaDisplay.tweenTo(tta);
+
+  return [elevation, tta];
 }
 
 function calcElevation(distance: number, charges: number): number | undefined {

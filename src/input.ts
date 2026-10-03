@@ -124,7 +124,7 @@ export function armReset() {
       display.classList.add("is-armed-for-reset");
     }
   });
-  
+
   resetCallbacks.forEach((callback) => callback());
 }
 
