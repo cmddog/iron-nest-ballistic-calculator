@@ -16,7 +16,7 @@ function showResultError(message: string): void {
   resultErrorTimer = setTimeout(() => {
     resultError.classList.remove("visible");
     resultErrorTimer = null;
-  }, 3000);
+  }, 5000);
 }
 
 function clearResultError(): void {
