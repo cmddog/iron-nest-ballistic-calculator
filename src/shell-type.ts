@@ -49,7 +49,7 @@ let resetArmed = false;
 const predictionLabel = signal("");
 
 export const selectedShell = computed(() =>
-    SHELL_TYPES.find((shell) => shell.label == predictionLabel.value)
+  SHELL_TYPES.find((shell) => shell.label == predictionLabel.value),
 );
 
 function inputOnEnter(): void {

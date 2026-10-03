@@ -9,16 +9,18 @@ const labelValue = signal("");
 export const label = computed(() => labelValue.value);
 
 export function setupLabelField(): void {
+  input.value = "";
+
   input.addEventListener("keydown", (e) => {
-    if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+    if (e.key === "Backspace" || e.key === " ") {
+      resetArmed = false;
+      input.classList.remove("is-armed-for-reset");
+    } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
       if (resetArmed) {
         resetArmed = false;
         input.classList.remove("is-armed-for-reset");
         input.value = "";
       }
-    } else if (e.key === "Backspace") {
-      resetArmed = false;
-      input.classList.remove("is-armed-for-reset");
     }
   });
 
