@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && ssh -i ~/.ssh/vps_key root@46.225.139.80 \"rm -rf ~/iron-nest/*\" && scp -i ~/.ssh/vps_key -r dist/* root@46.225.139.80:~/iron-nest/"
   },
   "devDependencies": {
     "typescript": "~6.0.2",

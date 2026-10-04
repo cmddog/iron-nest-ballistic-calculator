@@ -89,7 +89,7 @@ const cardView = (t: Target, index: number, total: number) => html`
             <span>[ELVN]</span>
           </div>
           <div>
-            <span>${t.bearing.toFixed(2).padStart(6, "0")}°</span>
+            <span>${t.bearing.toFixed(1).padStart(5, "0")}°</span>
             <span>[BRNG]</span>
           </div>
           <div>

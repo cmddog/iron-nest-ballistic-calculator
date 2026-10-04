@@ -455,6 +455,7 @@ input.is-armed-for-reset:focus,
   border: none;
   background-color: var(--primary);
   box-shadow: 0 0 0.2em var(--primary);
+  width: 100%;
 }
 
 button svg {
@@ -495,7 +496,7 @@ button svg {
   width: 100%;
 }
 
-@media (width >= 90rem) {
+@media (min-width: 90rem) {
   #queue {
     display: flex;
     flex-direction: column;
@@ -517,6 +518,7 @@ button svg {
 .target-queue {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   width: 100%;
 }
@@ -524,6 +526,7 @@ button svg {
 .queue-card {
   display: flex;
   gap: 2rem;
+  width: 27rem;
 }
 
 .queue-card.is-dimmed {
@@ -567,6 +570,26 @@ button svg {
   font-size: 2rem;
 }
 
+@media (max-width: 980px) {
+  .queue-card {
+    width: 18rem;
+    gap: 0;
+  }
+
+  .queue-shell-wrap {
+    position: relative;
+    height: 2rem;
+  }
+
+  .queue-shell-text {
+    font-size: 1.5rem;
+  }
+
+  .queue-card header svg {
+    height: 2rem;
+  }
+}
+
 .t-content-inner {
   display: flex;
   flex-direction: column;
@@ -576,12 +599,20 @@ button svg {
 
 .t-body-numbers {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 
   div {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media (max-width: 980px) {
+      .item:nth-child(3) {
+        flex-basis: 100%;
+        margin-inline: auto;
+      }
+    }
 
     span:first-child {
       font-size: 2.25rem;

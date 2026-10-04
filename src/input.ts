@@ -8,7 +8,7 @@ interface FieldConfig {
 
 const FIELDS: Record<string, FieldConfig> = {
   distance: { totalDigits: 4, decimalPlaces: 2 },
-  bearing: { totalDigits: 5, decimalPlaces: 2, maxValue: 36000 },
+  bearing: { totalDigits: 4, decimalPlaces: 1, maxValue: 3600 },
 };
 
 const distanceValue = signal<number>(0);
