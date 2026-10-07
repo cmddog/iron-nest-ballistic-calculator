@@ -41,6 +41,26 @@ export function toggleDimTarget(id: number) {
   dimmedIds.value = next;
 }
 
+function sortTargets() {
+  if (targets.value.length < 2) return;
+  const sorted = [...targets.value].sort((a, b) => a.bearing - b.bearing);
+
+  let maxGap = -1;
+  let cutIndex = 0;
+  sorted.forEach((t, i) => {
+    const nextIndex = (i + 1) % sorted.length;
+    const gap = ((sorted[nextIndex].bearing - t.bearing) % 360 + 360) % 360;
+    if (gap > maxGap) {
+      maxGap = gap;
+      cutIndex = nextIndex;
+    }
+  })
+
+  targets.value = cutIndex === 0
+      ? sorted
+      : [...sorted.slice(cutIndex), ...sorted.slice(0, cutIndex)];
+}
+
 const cardView = (t: Target, index: number, total: number) => html`
   <div class="bounding-box-outer">
     <p>> ${t.label?.trim() || "Target #" + t.id}</p>
@@ -100,7 +120,7 @@ const cardView = (t: Target, index: number, total: number) => html`
       </div>
 
       <div class="card-actions">
-        <button ?disabled=${index === 0} @click=${() => moveTarget(t.id, -1)}>
+        <button ?disabled=${index === 0} @click=${() => moveTarget(t.id, -1)} aria-label="Move target up" ">
           <svg viewBox="0 0 7 4" shape-rendering="crispEdges">
             <rect fill="currentColor" x="0" y="3" width="1" height="1" />
             <rect fill="currentColor" x="1" y="2" width="1" height="1" />
@@ -115,7 +135,7 @@ const cardView = (t: Target, index: number, total: number) => html`
           ?disabled=${index === total - 1}
           @click=${() => moveTarget(t.id, 1)}
         >
-          <svg viewBox="0 0 7 4" shape-rendering="crispEdges">
+          <svg viewBox="0 0 7 4" shape-rendering="crispEdges" aria-label="Move target down">
             <rect fill="currentColor" x="0" y="0" width="1" height="1" />
             <rect fill="currentColor" x="1" y="1" width="1" height="1" />
             <rect fill="currentColor" x="2" y="2" width="1" height="1" />
@@ -126,7 +146,7 @@ const cardView = (t: Target, index: number, total: number) => html`
           </svg>
         </button>
         <button @click=${() => removeTarget(t.id)}>
-          <svg viewBox="0 0 9 9" shape-rendering="crispEdges">
+          <svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-label="Delete Target">
             <rect fill="currentColor" x="2" y="0" width="5" height="1" />
             <rect fill="currentColor" x="0" y="1" width="9" height="1" />
             <rect fill="currentColor" x="1" y="2" width="1" height="6" />
@@ -136,7 +156,7 @@ const cardView = (t: Target, index: number, total: number) => html`
             <rect fill="currentColor" x="2" y="8" width="5" height="1" />
           </svg>
         </button>
-        <button @click=${() => toggleDimTarget(t.id)}>
+        <button @click=${() => toggleDimTarget(t.id)} aria-label="Mark target as done">
           <svg viewBox="0 0 7 5" shape-rendering="crispEdges">
             <rect x="0" y="2" width="1" height="1"/>
             <rect x="1" y="3" width="1" height="1"/>
@@ -160,6 +180,33 @@ const queueView = () => {
   return html`
     <section class="target-queue">
       <div class="hr"></div>
+      <div class="queue-button-rail">
+        <div class="queue-buttons">
+          <button class="bounding-box sort-button" @click=${() => sortTargets()} aria-label="Sort targets">
+            <svg viewBox="0 0 9 9" shape-rendering="crispEdges">
+              <rect fill="currentColor" x="2" y="0" width="1" height="8" />
+              <rect fill="currentColor" x="1" y="1" width="3" height="1" />
+              <rect fill="currentColor" x="0" y="2" width="1" height="1" />
+              <rect fill="currentColor" x="4" y="2" width="1" height="1" />
+              <rect fill="currentColor" x="6" y="1" width="1" height="8" />
+              <rect fill="currentColor" x="5" y="7" width="3" height="1" />
+              <rect fill="currentColor" x="4" y="6" width="1" height="1" />
+              <rect fill="currentColor" x="8" y="6" width="1" height="1" />
+            </svg>
+          </button>
+          <button class="bounding-box delete-button" @click=${() => targets.value = []} aria-label="Delete all targets">
+            <svg viewBox="0 0 9 9" shape-rendering="crispEdges">
+              <rect fill="currentColor" x="2" y="0" width="5" height="1" />
+              <rect fill="currentColor" x="0" y="1" width="9" height="1" />
+              <rect fill="currentColor" x="1" y="2" width="1" height="6" />
+              <rect fill="currentColor" x="7" y="2" width="1" height="6" />
+              <rect fill="currentColor" x="3" y="3" width="1" height="4" />
+              <rect fill="currentColor" x="5" y="3" width="1" height="4" />
+              <rect fill="currentColor" x="2" y="8" width="5" height="1" />
+            </svg>
+          </button>
+        </div>
+      </div>
       ${repeat(
         list,
         (t) => t.id,

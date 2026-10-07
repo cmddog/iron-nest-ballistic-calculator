@@ -59,6 +59,7 @@
                     inputmode="numeric"
                     name="distance"
                     type="text"
+                    aria-label="distance"
                   />
                   <span class="value-display" data-field="distance">00.00</span>
                   <span>km</span>
@@ -75,6 +76,7 @@
                     inputmode="numeric"
                     name="bearing"
                     type="text"
+                    aria-label="bearing"
                   />
                   <span class="value-display" data-field="bearing">000.00</span>
                   <span>deg</span>
@@ -92,6 +94,7 @@
                   name="bearing"
                   oninput="this.value = this.value.toUpperCase()"
                   type="text"
+                  aria-label="shell type"
                 />
               </label>
             </div>
@@ -105,18 +108,19 @@
                   name="bearing"
                   placeholder="TARGET"
                   type="text"
+                  aria-label="label"
                 />
               </label>
             </div>
             <div class="charges-outer">
               > CHARGES
               <div class="charges">
-                <button class="charge-button bounding-box">1</button>
-                <button class="charge-button bounding-box">2</button>
-                <button class="charge-button bounding-box">3</button>
-                <button class="charge-button bounding-box">4</button>
-                <button class="charge-button bounding-box">5</button>
-                <button class="charge-button bounding-box">6</button>
+                <button class="charge-button bounding-box" aria-label="1 charge">1</button>
+                <button class="charge-button bounding-box" aria-label="2 charges">2</button>
+                <button class="charge-button bounding-box" aria-label="3 charges">3</button>
+                <button class="charge-button bounding-box" aria-label="4 charges">4</button>
+                <button class="charge-button bounding-box" aria-label="5 charges">5</button>
+                <button class="charge-button bounding-box" aria-label="6 charges">6</button>
               </div>
             </div>
             <div class="result bounding-box-outer">

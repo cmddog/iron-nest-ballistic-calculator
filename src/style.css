@@ -143,8 +143,8 @@ label:active {
   border: solid 1px var(--primary);
   padding: 1rem;
   box-shadow:
-    0 0 0.2em currentColor,
-    inset 0 0 0.2em currentColor,
+    0 0 0.2em var(--primary),
+    inset 0 0 0.2em var(--primary),
     1px 1px rgba(255, 0, 255, 0.5),
     -1px -1px rgba(0, 255, 255, 0.4);
 }
@@ -496,6 +496,27 @@ button svg {
   width: 100%;
 }
 
+.queue-button-rail {
+    position: absolute;
+    top: 3.5rem;
+    bottom: 0;
+    pointer-events: none;
+    left: 50%;
+    margin-left: 16rem;
+    z-index: 1;
+}
+
+.queue-buttons {
+    position: sticky;
+    top: 2rem;
+    pointer-events: auto;
+    z-index: 1;
+
+    button {
+        background-color: rgb(28, 45, 30);
+    }
+}
+
 @media (min-width: 90rem) {
   #queue {
     display: flex;
@@ -507,6 +528,13 @@ button svg {
   #queue .target-queue .hr {
     display: none;
   }
+
+  .queue-button-rail {
+    top: -2.8rem;
+    right: 0;
+      left: unset;
+      margin-left: unset;
+  }
 }
 
 @media (width < 90rem) {
@@ -516,11 +544,16 @@ button svg {
 }
 
 .target-queue {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   width: 100%;
+
+  .hr {
+    margin-top: 1rem;
+  }
 }
 
 .queue-card {
@@ -588,6 +621,17 @@ button svg {
   .queue-card header svg {
     height: 2rem;
   }
+
+    .queue-button-rail {
+        position: sticky;
+        top: 2rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        pointer-events: none;
+        margin-left: unset;
+    }
 }
 
 .t-content-inner {
@@ -698,5 +742,15 @@ button svg {
   .result {
     grid-column: 1 / span 2;
     grid-row: 4;
+  }
+}
+
+.delete-button {
+  color: var(--crt-red);
+
+  svg {
+    filter: drop-shadow(0 0 0.2em var(--crt-red))
+    drop-shadow(1px 1px rgba(255, 0, 255, 0.5))
+    drop-shadow(-1px -1px rgba(0, 255, 255, 0.4));
   }
 }
